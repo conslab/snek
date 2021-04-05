@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace snakesharp
+namespace snek
 {
     class Program
     {
@@ -20,6 +20,14 @@ namespace snakesharp
             length++;
             bx = rand.Next(1, 15);
             by = rand.Next(1, 15);
+            for (int i = 1; i < length; i++)
+            {
+                if (bx == a[i, 0] && by == a[i, 1])
+                {
+                    ScorePlus();
+                    length--;
+                }
+            }
             Console.BackgroundColor = ConsoleColor.Green;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.SetCursorPosition(bx * 2, by);
@@ -37,8 +45,9 @@ namespace snakesharp
             Console.SetCursorPosition(0, 0);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine($"Game over\n" +
-                $"Your score is {length - 6}");
+            Console.WriteLine($"you killed snek.\n" +
+                $"why? it ate just {length - 6} green blobs. why would you do that?\n" +
+                $"just close the application. you are an awful person.");
 
         }
         static void SnakeMovement()
@@ -48,14 +57,6 @@ namespace snakesharp
                 if (bonus)
                     ScorePlus();
 
-                for (int i = 1; i < length; i++)
-                {
-                    if (bx == a[i, 0] && by == a[i, 1])
-                    {
-                        ScorePlus();
-                        length--;
-                    }
-                }
                 switch (movement)
                 {
                     case 'u':
@@ -122,6 +123,62 @@ namespace snakesharp
         }
         static void Main(string[] args)
         {
+            Console.WriteLine("not welcome to \"snek.\"\n" +
+                "this is not a snake game. this is snek.\n" +
+                "if you wanna start, press 'y'\n" +
+                "if not, just close this window or press 'n'\n" +
+                "maybe you want to know something about \"snek\", press 'a' for that");
+
+            
+            bool cont = false;
+            while (!cont)
+            {
+                ConsoleKey k = Console.ReadKey(true).Key;
+                switch (k)
+                {
+                    case ConsoleKey.Y:
+                        cont = true;
+                        break;
+                    case ConsoleKey.N:
+                        Console.WriteLine("ok, closing application...");
+                        Thread.Sleep(736);
+                        Environment.Exit(0);
+                        break;
+                    case ConsoleKey.A:
+                        Console.Clear();
+                        Console.WriteLine("in this game you are controlling snek.\n" +
+                            "who is \"snek.\"? idk lol\n" +
+                            "arrow keys is controlling his movement.\n" +
+                            "you should help snek. to collect all green blobs, which makes him really long snek.\n" +
+                            "\n\n\n" +
+                            "if you wanna start, press 'y'\n" +
+                            "if not, just close this window or press 'n'\n");
+                        while (!cont)
+                        {
+                            ConsoleKey kk = Console.ReadKey(true).Key;
+                            switch (kk)
+                            {
+                                case ConsoleKey.Y:
+                                    cont = true;
+                                    break;
+                                case ConsoleKey.N:
+                                    Console.WriteLine("ok, closing application...");
+                                    Thread.Sleep(736);
+                                    Environment.Exit(0);
+                                    break;
+                                default:
+                                    Console.WriteLine("wrong key... are you sure you can read?");
+                                    break;
+                            }
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("wrong key... are you sure you can read?");
+                        break;
+                }
+            }
+
+            Console.Clear();
             Console.SetWindowSize(34, 16);
             //top line
             Console.BackgroundColor = ConsoleColor.Red;
